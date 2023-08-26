@@ -8,14 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var locationManager = LocationManager()
+    
+    @AppStorage("lat") var lat=0.0
+    @AppStorage("lon") var lon=0.0
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        
+        ZStack {
+            Color.blue.opacity(0.2).ignoresSafeArea()
+            SimpleMapView(locationManager: locationManager)
         }
-        .padding()
+        .onAppear(){
+            locationManager.requestLocation()
+        }
+        
     }
 }
 
